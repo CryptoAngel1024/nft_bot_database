@@ -20,7 +20,7 @@ client.onItemListed('*', async (event) => {
     const collection = db.collection(process.env.COLLECTION_ITEM_LISTED);
       const sampleData = {
         base_price: event.payload.base_price,
-        listing_date: event.payload.listing_date,
+        listing_date: new Date(event.payload.listing_date).getTime(),
         collection_slug: event.payload.collection.slug,
         is_private: event.payload.is_private,
         item: event.payload.item
