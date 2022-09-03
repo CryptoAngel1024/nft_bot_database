@@ -1,7 +1,8 @@
 import { OpenSeaStreamClient } from '@opensea/stream-js';
 import { WebSocket } from 'ws';
 import {connectToCluster} from './mongo.js';
-require("dotenv").config();
+import * as dotenv from 'dotenv'
+dotenv.config()
 
 let mongoClient = await connectToCluster(process.env.MONGO_DB_URL);
 
@@ -21,6 +22,7 @@ client.onItemListed('*', async (event) => {
         base_price: event.payload.base_price,
         listing_date: event.payload.listing_date,
         collection_slug: event.payload.collection.slug,
+        is_private: event.payload.is_private,
         item: event.payload.item
       };
       await collection.insertOne(sampleData);
