@@ -18,14 +18,16 @@ client.onItemListed('*', async (event) => {
   try {
     const db = mongoClient.db(process.env.DB_NAME);
     const collection = db.collection(process.env.COLLECTION_ITEM_LISTED);
+    if(event.payload.item.chain.name === 'ethereum') {
       const sampleData = {
         base_price: event.payload.base_price,
         listing_date: new Date(event.payload.listing_date).getTime(),
         collection_slug: event.payload.collection.slug,
         is_private: event.payload.is_private,
-        item: event.payload.item
+        nft_id: event.payload.item.nft_id
       };
       await collection.insertOne(sampleData);
+    }
   } catch(err) {
     console.log('err', err)
   }
