@@ -23,7 +23,8 @@ client.onItemListed('*', async (event) => {
         base_price: event.payload.base_price,
         listing_date: new Date(event.payload.listing_date).getTime(),
         collection_slug: event.payload.collection.slug,
-        nft_id: event.payload.item.nft_id
+        contract_address: event.payload.item.nft_id.split("/")[1],
+        token_id: event.payload.item.nft_id.split("/")[2]
       };
       await collection.insertOne(sampleData);
     }
